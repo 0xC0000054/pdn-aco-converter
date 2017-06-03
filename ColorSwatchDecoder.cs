@@ -74,7 +74,10 @@ namespace SwatchConverter
 			{
 				short fileVersion = reader.ReadInt16();
 
-				if (fileVersion != 1)
+				// According to http://cyotek.com/blog/reading-photoshop-color-swatch-aco-files-using-csharp
+				// some ACO files only include the version 2 data.
+
+				if (fileVersion != 1 && fileVersion != 2)
 				{
 					throw new FormatException(Properties.Resources.UnsupportedSwatchFileVersion);
 				}
@@ -86,7 +89,7 @@ namespace SwatchConverter
 					throw new FormatException(Properties.Resources.EmptySwatchFile);
 				}
 
-				bool version2 = IsVersion2File(reader, count);
+				bool version2 = IsVersion2File(reader, fileVersion, count);
 
 				if (!CheckSupportedColorModes(reader, count, version2))
 				{
@@ -99,28 +102,35 @@ namespace SwatchConverter
 			return colors;
 		}
 
-		private static bool IsVersion2File(BinaryReverseReader reader, ushort count)
+		private static bool IsVersion2File(BinaryReverseReader reader, short fileVersion, ushort count)
 		{
-			long v2Offset = reader.BaseStream.Position + (count * 10);
-
-			// Add 4 bytes to account for the file header length, some version 1 files may have a padding byte without a version 2 header. 
-			if ((v2Offset + 4L) < reader.BaseStream.Length)
+			if (fileVersion == 2)
 			{
-				long startOffset = reader.BaseStream.Position;
+				return true;
+			}
+			else
+			{
+				long v2Offset = reader.BaseStream.Position + (count * 10);
 
-				reader.BaseStream.Seek(v2Offset, SeekOrigin.Begin);
-
-				short newVersion = reader.ReadInt16();
-				ushort newCount = reader.ReadUInt16();
-
-				if (newVersion == 2 && newCount == count && reader.BaseStream.Position < reader.BaseStream.Length)
+				// Add 4 bytes to account for the file header length, some version 1 files may have a padding byte without a version 2 header. 
+				if ((v2Offset + 4L) < reader.BaseStream.Length)
 				{
-					return true;
-				}
-				else
-				{
-					reader.BaseStream.Position = startOffset;
-				}
+					long startOffset = reader.BaseStream.Position;
+
+					reader.BaseStream.Seek(v2Offset, SeekOrigin.Begin);
+
+					short newVersion = reader.ReadInt16();
+					ushort newCount = reader.ReadUInt16();
+
+					if (newVersion == 2 && newCount == count && reader.BaseStream.Position < reader.BaseStream.Length)
+					{
+						return true;
+					}
+					else
+					{
+						reader.BaseStream.Position = startOffset;
+					}
+				} 
 			}
 
 			return false;
