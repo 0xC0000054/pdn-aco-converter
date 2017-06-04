@@ -111,7 +111,7 @@ namespace SwatchConverter
             MessageBox.Show(this, message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, 0);
         }
 
-        private void SavePalette(string path, ColorBgra[] swatches, int index)
+        private void SavePalette(string path, ColorBgra[] swatches, int startIndex)
         {
             FileStream stream = null;
 
@@ -123,13 +123,14 @@ namespace SwatchConverter
                     stream = null;
 
                     sw.WriteLine("; Adobe® Photoshop® Color Swatch file converted to Paint.NET by {0}.", this.Text);
-                    int length = swatches.Length - index;
+                    int length = swatches.Length - startIndex;
 
                     if (length > 96)
                     {
                         length = 96;
                     }
 
+                    int index = startIndex;
                     while (length > 0)
                     {
                         sw.WriteLine(swatches[index].Bgra.ToString("X8", CultureInfo.InvariantCulture));
