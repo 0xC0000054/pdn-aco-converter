@@ -48,7 +48,7 @@ namespace SwatchConverter
         {
             get
             {
-                return String.Format(CultureInfo.CurrentCulture, "Color: R: {0}, G: {1} B: {2} A: {3}, Name: {4}",
+                return string.Format(CultureInfo.CurrentCulture, "Color: R: {0}, G: {1} B: {2} A: {3}, Name: {4}",
                                      this.color.R, this.color.G, this.color.B, this.color.A, this.name);
             }
         }
