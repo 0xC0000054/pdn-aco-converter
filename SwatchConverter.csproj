@@ -64,7 +64,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryReverseReader.cs" />
+    <Compile Include="BigEndianBinaryReader.cs" />
     <Compile Include="ColorBgra.cs" />
     <Compile Include="ColorSpaceConverter.cs" />
     <Compile Include="ColorSwatchCollection.cs" />

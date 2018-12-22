@@ -70,7 +70,7 @@ namespace SwatchConverter
 		{
 			ColorSwatchCollection colors = null;
 
-			using (BinaryReverseReader reader = new BinaryReverseReader(stream))
+			using (BigEndianBinaryReader reader = new BigEndianBinaryReader(stream))
 			{
 				short fileVersion = reader.ReadInt16();
 
@@ -102,7 +102,7 @@ namespace SwatchConverter
 			return colors;
 		}
 
-		private static bool IsVersion2File(BinaryReverseReader reader, short fileVersion, ushort count)
+		private static bool IsVersion2File(BigEndianBinaryReader reader, short fileVersion, ushort count)
 		{
 			if (fileVersion == 2)
 			{
@@ -164,7 +164,7 @@ namespace SwatchConverter
 			return foundSupportedColor;
 		}
 
-		private static ColorSwatchCollection ReadColors(BinaryReverseReader reader, ushort count, bool version2)
+		private static ColorSwatchCollection ReadColors(BigEndianBinaryReader reader, ushort count, bool version2)
 		{
 			HashSet<ColorSwatch> uniqueColors = new HashSet<ColorSwatch>();
 
@@ -197,7 +197,7 @@ namespace SwatchConverter
 			return new ColorSwatchCollection(uniqueColors);
 		}
 
-		private static bool TryGetColor(BinaryReverseReader reader, ColorMode mode, out ColorBgra color)
+		private static bool TryGetColor(BigEndianBinaryReader reader, ColorMode mode, out ColorBgra color)
 		{
 			if (mode == ColorMode.RGB)
 			{
