@@ -4,7 +4,7 @@
 //
 // This software is provided under the MIT License:
 //   Copyright (C) 2012-2017 Nicholas Hayes
-// 
+//
 // See LICENSE.txt for complete licensing and attribution information.
 //
 /////////////////////////////////////////////////////////////////////////////////
@@ -20,7 +20,7 @@ namespace SwatchConverter
 	// https://www.adobe.com/devnet-apps/photoshop/fileformatashtml/PhotoshopFileFormats.htm#50577411_pgfId-1055819
 
 	/// <summary>
-	/// Decodes Adobe® Photoshop® Color Swatches. 
+	/// Decodes Adobe® Photoshop® Color Swatches.
 	/// </summary>
 	internal sealed class ColorSwatchDecoder
 	{
@@ -45,7 +45,7 @@ namespace SwatchConverter
 		}
 
 		private enum ColorMode : short
-		{ 
+		{
 			RGB = 0,
 			HSB = 1,
 			CMYK = 2,
@@ -112,7 +112,7 @@ namespace SwatchConverter
 			{
 				long v2Offset = reader.BaseStream.Position + (count * 10);
 
-				// Add 4 bytes to account for the file header length, some version 1 files may have a padding byte without a version 2 header. 
+				// Add 4 bytes to account for the file header length, some version 1 files may have a padding byte without a version 2 header.
 				if ((v2Offset + 4L) < reader.BaseStream.Length)
 				{
 					long startOffset = reader.BaseStream.Position;
@@ -130,7 +130,7 @@ namespace SwatchConverter
 					{
 						reader.BaseStream.Position = startOffset;
 					}
-				} 
+				}
 			}
 
 			return false;

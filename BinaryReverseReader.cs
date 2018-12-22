@@ -4,7 +4,7 @@
 //
 // This software is provided under the MIT License:
 //   Copyright (C) 2012-2017 Nicholas Hayes
-// 
+//
 // See LICENSE.txt for complete licensing and attribution information.
 //
 /////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ namespace SwatchConverter
             unsafe
             {
                 SwapBytes((byte*)&val, 8);
-            }            
+            }
             return val;
         }
 
