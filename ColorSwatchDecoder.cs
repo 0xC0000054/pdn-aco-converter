@@ -110,25 +110,25 @@ namespace SwatchConverter
 			}
 			else
 			{
-				long v2Offset = reader.BaseStream.Position + (count * 10);
+				long v2Offset = reader.Position + (count * 10);
 
 				// Add 4 bytes to account for the file header length, some version 1 files may have a padding byte without a version 2 header.
-				if ((v2Offset + 4L) < reader.BaseStream.Length)
+				if ((v2Offset + 4L) < reader.Length)
 				{
-					long startOffset = reader.BaseStream.Position;
+					long startOffset = reader.Position;
 
-					reader.BaseStream.Seek(v2Offset, SeekOrigin.Begin);
+					reader.Position = v2Offset;
 
 					short newVersion = reader.ReadInt16();
 					ushort newCount = reader.ReadUInt16();
 
-					if (newVersion == 2 && newCount == count && reader.BaseStream.Position < reader.BaseStream.Length)
+					if (newVersion == 2 && newCount == count && reader.Position < reader.Length)
 					{
 						return true;
 					}
 					else
 					{
-						reader.BaseStream.Position = startOffset;
+						reader.Position = startOffset;
 					}
 				}
 			}
@@ -136,9 +136,9 @@ namespace SwatchConverter
 			return false;
 		}
 
-		private static bool CheckSupportedColorModes(BinaryReader reader, ushort count, bool version2)
+		private static bool CheckSupportedColorModes(BigEndianBinaryReader reader, ushort count, bool version2)
 		{
-			long startOffset = reader.BaseStream.Position;
+			long startOffset = reader.Position;
 
 			bool foundSupportedColor = false;
 
@@ -149,15 +149,15 @@ namespace SwatchConverter
 				if (mode == ColorMode.RGB || mode == ColorMode.HSB || mode == ColorMode.CMYK || mode == ColorMode.Gray || mode == ColorMode.Lab)
 				{
 					foundSupportedColor = true;
-					reader.BaseStream.Position = startOffset;
+					reader.Position = startOffset;
 					break;
 				}
 
-				reader.BaseStream.Position += 8L;
+				reader.Position += 8L;
 				if (version2)
 				{
 					int nameLengthInBytes = reader.ReadInt32() * 2;
-					reader.BaseStream.Position += nameLengthInBytes;
+					reader.Position += nameLengthInBytes;
 				}
 			}
 
@@ -185,11 +185,11 @@ namespace SwatchConverter
 				else
 				{
 					// Skip any unknown color modes.
-					reader.BaseStream.Position += 8L;
+					reader.Position += 8L;
 					if (version2)
 					{
 						int nameLengthInBytes = reader.ReadInt32() * 2;
-						reader.BaseStream.Position += nameLengthInBytes;
+						reader.Position += nameLengthInBytes;
 					}
 				}
 			}
@@ -204,7 +204,7 @@ namespace SwatchConverter
 				ushort r = reader.ReadUInt16();
 				ushort g = reader.ReadUInt16();
 				ushort b = reader.ReadUInt16();
-				reader.BaseStream.Position += 2L;
+				reader.Position += 2L;
 
 				byte red = (byte)(r / 257);
 				byte green = (byte)(g / 257);
@@ -219,7 +219,7 @@ namespace SwatchConverter
 				ushort h = reader.ReadUInt16();
 				ushort s = reader.ReadUInt16();
 				ushort b = reader.ReadUInt16();
-				reader.BaseStream.Position += 2L;
+				reader.Position += 2L;
 
 				double hue = (h / 65535.0) * 360.0;
 				double saturation = (s / 65535.0) * 100.0;
@@ -232,7 +232,7 @@ namespace SwatchConverter
 			else if (mode == ColorMode.Gray)
 			{
 				byte gray = (byte)((reader.ReadUInt16() / 10000.0) * 255);
-				reader.BaseStream.Position += 6L;
+				reader.Position += 6L;
 
 				color = ColorBgra.FromBgra(gray, gray, gray, 255);
 
@@ -254,7 +254,7 @@ namespace SwatchConverter
 				short l = reader.ReadInt16();
 				short a = reader.ReadInt16();
 				short b = reader.ReadInt16();
-				reader.BaseStream.Position += 2L;
+				reader.Position += 2L;
 
 				color = ColorSpaceConverter.LabToRGB(l / 100.0, a / 100.0, b / 100.0);
 
