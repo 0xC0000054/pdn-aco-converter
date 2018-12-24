@@ -163,19 +163,31 @@ namespace SwatchConverter
             double var_Z3 = var_Z * var_Z * var_Z;
 
             if (var_Y3 > 0.008856)
+            {
                 var_Y = var_Y3;
+            }
             else
+            {
                 var_Y = (var_Y - 16 / 116) / 7.787;
+            }
 
             if (var_X3 > 0.008856)
+            {
                 var_X = var_X3;
+            }
             else
+            {
                 var_X = (var_X - 16 / 116) / 7.787;
+            }
 
             if (var_Z3 > 0.008856)
+            {
                 var_Z = var_Z3;
+            }
             else
+            {
                 var_Z = (var_Z - 16 / 116) / 7.787;
+            }
 
             double X = ref_X * var_X;
             double Y = ref_Y * var_Y;
@@ -205,30 +217,62 @@ namespace SwatchConverter
             double var_B = var_X * 0.0557 + var_Y * (-0.2040) + var_Z * 1.0570;
 
             if (var_R > 0.0031308)
+            {
                 var_R = 1.055 * (Math.Pow(var_R, 1 / 2.4)) - 0.055;
+            }
             else
+            {
                 var_R = 12.92 * var_R;
+            }
 
             if (var_G > 0.0031308)
+            {
                 var_G = 1.055 * (Math.Pow(var_G, 1 / 2.4)) - 0.055;
+            }
             else
+            {
                 var_G = 12.92 * var_G;
+            }
 
             if (var_B > 0.0031308)
+            {
                 var_B = 1.055 * (Math.Pow(var_B, 1 / 2.4)) - 0.055;
+            }
             else
+            {
                 var_B = 12.92 * var_B;
+            }
 
             int nRed = (int)(var_R * 256.0);
             int nGreen = (int)(var_G * 256.0);
             int nBlue = (int)(var_B * 256.0);
 
-            if (nRed < 0) nRed = 0;
-            else if (nRed > 255) nRed = 255;
-            if (nGreen < 0) nGreen = 0;
-            else if (nGreen > 255) nGreen = 255;
-            if (nBlue < 0) nBlue = 0;
-            else if (nBlue > 255) nBlue = 255;
+            if (nRed < 0)
+            {
+                nRed = 0;
+            }
+            else if (nRed > 255)
+            {
+                nRed = 255;
+            }
+
+            if (nGreen < 0)
+            {
+                nGreen = 0;
+            }
+            else if (nGreen > 255)
+            {
+                nGreen = 255;
+            }
+
+            if (nBlue < 0)
+            {
+                nBlue = 0;
+            }
+            else if (nBlue > 255)
+            {
+                nBlue = 255;
+            }
 
             return ColorBgra.FromBgra((byte)nBlue, (byte)nGreen, (byte)nRed, 255);
         }
@@ -267,12 +311,32 @@ namespace SwatchConverter
             int nGreen = (int)((1.0 - (M * (1 - K) + K)) * 255);
             int nBlue = (int)((1.0 - (Y * (1 - K) + K)) * 255);
 
-            if (nRed < 0) nRed = 0;
-            else if (nRed > 255) nRed = 255;
-            if (nGreen < 0) nGreen = 0;
-            else if (nGreen > 255) nGreen = 255;
-            if (nBlue < 0) nBlue = 0;
-            else if (nBlue > 255) nBlue = 255;
+            if (nRed < 0)
+            {
+                nRed = 0;
+            }
+            else if (nRed > 255)
+            {
+                nRed = 255;
+            }
+
+            if (nGreen < 0)
+            {
+                nGreen = 0;
+            }
+            else if (nGreen > 255)
+            {
+                nGreen = 255;
+            }
+
+            if (nBlue < 0)
+            {
+                nBlue = 0;
+            }
+            else if (nBlue > 255)
+            {
+                nBlue = 255;
+            }
 
             return ColorBgra.FromBgra((byte)nBlue, (byte)nGreen, (byte)nRed, 255);
         }
