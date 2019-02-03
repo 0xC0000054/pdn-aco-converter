@@ -191,7 +191,7 @@ namespace SwatchConverter
 
                 if (bytesUnread > 0)
                 {
-                    Buffer.BlockCopy(buffer, readOffset, bytes, 0, bytesUnread);
+                    Buffer.BlockCopy(buffer, readOffset, bytes, offset, bytesUnread);
                 }
 
                 // Invalidate the existing buffer.
