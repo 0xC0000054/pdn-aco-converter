@@ -3,7 +3,7 @@
 // ACO converter for Paint.NET
 //
 // This software is provided under the MIT License:
-//   Copyright (C) 2012-2018 Nicholas Hayes
+//   Copyright (C) 2012-2019 Nicholas Hayes
 //
 // See LICENSE.txt for complete licensing and attribution information.
 //
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("null54")]
 [assembly: AssemblyProduct("SwatchConverter")]
-[assembly: AssemblyCopyright("Copyright © 2012-2018 Nicholas Hayes (aka null54)")]
+[assembly: AssemblyCopyright("Copyright © 2012-2019 Nicholas Hayes (aka null54)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
